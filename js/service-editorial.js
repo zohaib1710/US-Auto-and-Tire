@@ -3,7 +3,7 @@
     'wheel-alignments': {
       headline:'Straight tracking starts with measured geometry.',
       category:'WHEEL & TIRE SERVICE',
-      image:'live-gallery-car.jpg',
+      image:'wheel-alignment-hero.jpg',
       alt:'Performance vehicle positioned inside an automotive service facility',
       facts:[['TRACKING','Helps correct vehicle pulling'],['TIRE CONTACT','Supports more even tire wear'],['STEERING','Improves steering confidence']],
       symptoms:['Vehicle pulls left or right','Steering wheel sits off-center','Tires wear unevenly','Steering feels unstable'],
@@ -43,7 +43,7 @@
       related:[['fluid-services.html','Fluid Services'],['engine-diagnostics.html','Engine Diagnostics'],['battery-testing.html','Battery Testing']], cta:'Give your engine a service built around its specification.', visual:'oil'
     },
     'tire-rotations': {
-      headline:'Even wear begins with the right rotation pattern.', category:'TREAD WEAR / TIRE INSPECTION', image:'live-blue-car.jpg', alt:'Blue vehicle prepared for tire and wheel service',
+      headline:'Even wear begins with the right rotation pattern.', category:'TREAD WEAR / TIRE INSPECTION', image:'tire-rotation-hero.jpg', alt:'Technician rotating tires on a vehicle lift',
       facts:[['THE PATTERN','Vehicle and tire configuration determine movement'],['THE INSPECTION','Tread depth, pressure and visible condition'],['THE LIMIT','Directional or staggered setups may restrict rotation']],
       technicalTitle:'The tire layout determines the rotation map.', technicalIntro:'A square setup may allow front-to-rear or cross rotation. Directional tread, staggered sizing and specialty fitments can limit those patterns.',
       technical:[['Square fitment','All four sizes match, allowing the broadest pattern choices.'],['Directional tread','The tire must continue rotating in its designed direction.'],['Staggered fitment','Different front and rear sizes usually cannot exchange axles.']],
@@ -65,7 +65,7 @@
       related:[['fluid-services.html','Fluid Services'],['tire-rotations.html','Tire Rotations'],['suspension-and-exhaust.html','Suspension & Exhaust']], cta:'Turn a brake concern into a measured plan.', visual:'brakes'
     },
     'battery-testing': {
-      headline:'A no-start deserves a circuit check, not a first guess.', category:'STARTING / CHARGING SYSTEM', image:'live-parts.jpg', alt:'Automotive electrical components ready for inspection',
+      headline:'A no-start deserves a circuit check, not a first guess.', category:'STARTING / CHARGING SYSTEM', image:'battery-testing-hero.jpg', alt:'Technician testing a vehicle battery',
       facts:[['THE SYMPTOM','Slow crank, no-start or repeated jump'],['THE TEST PATH','Battery, connections, starting and charging'],['THE VEHICLE NOTE','Some models require battery registration']],
       technicalTitle:'Starting and charging form one electrical loop.', technicalIntro:'The battery supplies starting energy, the starter uses it, and the charging system replenishes it. Connections influence every stage.',
       technical:[['Stored energy','Condition and state of charge are related but not identical.'],['Starting demand','The starter and cable path place a measurable load on the battery.'],['Charging recovery','Charging behavior shows whether energy is restored.']],
@@ -76,7 +76,7 @@
       related:[['engine-diagnostics.html','Engine Diagnostics'],['oil-and-filter-changes.html','Oil & Filter Changes'],['fluid-services.html','Fluid Services']], cta:'Find what the starting system is actually telling you.', visual:'battery'
     },
     'fluid-services': {
-      headline:'Every fluid has a system, a specification and a job.', category:'SYSTEM PROTECTION / VEHICLE SPECIFICATIONS', image:'live-service.jpg', alt:'Vehicle receiving a multi-point service inspection',
+      headline:'Every fluid has a system, a specification and a job.', category:'SYSTEM PROTECTION / VEHICLE SPECIFICATIONS', image:'fluid-services-hero.jpg', alt:'Technician inspecting vehicle fluid reservoirs',
       facts:[['THE SYSTEMS','Brake, coolant, transmission and more'],['THE STANDARD','Vehicle-specific fluid requirements'],['THE DECISION','Inspect, service, repair a leak or monitor']],
       technicalTitle:'Different fluids protect different operating systems.', technicalIntro:'The same visual symptom can mean different things by circuit. Type, level, condition and source need to be interpreted in context.',
       technical:[['Cooling circuit','Coolant carries heat and protects system materials.'],['Hydraulic circuit','Brake and steering fluids transfer force.'],['Lubrication circuit','Driveline fluids protect surfaces and manage heat.']],
@@ -109,7 +109,7 @@
       related:[['fluid-services.html','Fluid Services'],['engine-diagnostics.html','Engine Diagnostics'],['suspension-and-exhaust.html','Suspension & Exhaust']], cta:'Start with the shift pattern, then build the repair decision.', visual:'transmission'
     },
     'suspension-and-exhaust': {
-      headline:'Trace the noise to the system before replacing by sound.', category:'RIDE CONTROL / EXHAUST INTEGRITY', image:'live-tow-truck.jpeg', alt:'Vehicle positioned for suspension and underbody inspection',
+      headline:'Trace the noise to the system before replacing by sound.', category:'RIDE CONTROL / EXHAUST INTEGRITY', image:'suspension-exhaust-hero.jpg', alt:'Technician inspecting suspension and exhaust components under a vehicle',
       facts:[['RIDE & CONTROL','Springs, dampers, links and bushings'],['EXHAUST PATH','Pipes, shields, hangers and leak areas'],['THE METHOD','Recreate, isolate and explain the symptom']],
       technicalTitle:'Two underbody systems tell different stories.', technicalIntro:'Suspension manages wheel movement and body control. Exhaust carries gases through supported components. Location and conditions separate the source.',
       technical:[['Support & control','Springs carry load while dampers and links manage movement.'],['Joints & isolation','Bushings and mounts locate parts while limiting harshness.'],['Exhaust route','Pipes, shields and hangers guide flow and control vibration.']],

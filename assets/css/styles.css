@@ -29,12 +29,32 @@ header.bg-navy nav{position:relative}header.bg-navy nav>a:last-child{font-size:0
 @media(max-width:767px){.site-container,.max-w-7xl,.max-w-6xl,.max-w-5xl{width:calc(100% - 2.5rem)!important;padding-left:0!important;padding-right:0!important}.header-utility{height:32px}.header-utility .site-container{font-size:.7rem;justify-content:center}.header-utility .site-container span{display:none}.nav-shell{height:72px}.site-header .logo-img{height:3rem;max-width:10.5rem}.mobile-drawer{inset:104px 0 0}.mobile-primary-actions{grid-template-columns:1fr}.mobile-service-links{grid-template-columns:1fr}.hero-grid{padding-top:9.5rem!important;padding-bottom:4rem!important;min-height:auto}.hero-grid h1{font-size:clamp(3rem,15vw,4.5rem)!important}.hero-grid>div{gap:3rem!important}.work-order{padding:1.4rem!important}.homepage main>section:not(.hero-grid),main>section.service-expansion,.appointment-section,.site-enhancements,.page-tools{padding-top:4rem!important;padding-bottom:4rem!important}.clarity-intro h2,.faq-intro h2,.appointment-section h2{font-size:2.5rem!important}.home-services .grid{grid-template-columns:1fr!important}.services-context-cta>div:last-child{width:100%;flex-direction:column}.services-context-cta a{width:100%}.home-process .grid{display:grid!important;grid-template-columns:1fr!important;padding-left:3rem}.home-process .grid:before{left:27px;right:auto;top:28px;bottom:28px;width:2px;height:auto}.home-process .grid>div>div:first-child{position:absolute;left:-3rem}.trust-statements .max-w-7xl{grid-template-columns:1fr!important}.trust-statements .max-w-7xl>div{border-bottom:1px solid #ffffff25;padding-bottom:1rem}.work-order-explainer dl>div{grid-template-columns:1fr;gap:.35rem}.home-gallery-grid{grid-template-columns:1fr!important;grid-template-rows:auto!important;grid-auto-rows:240px!important}.home-gallery-card,.home-gallery-featured{grid-column:1!important;grid-row:auto!important;min-height:240px!important}.home-gallery-card span{display:block}.faq-actions,.success-actions{flex-direction:column}.faq-actions a,.success-actions a{justify-content:center}.action-card-grid{grid-template-columns:1fr}.action-card:last-child{grid-column:auto}.action-card{min-height:240px}.appointment-section>div>div{gap:2.5rem!important}.appointment-form{padding:1.4rem!important;min-height:620px}.wizard-controls{display:flex;flex-direction:column}.wizard-controls button{width:100%;order:1}.wizard-controls .wizard-back{order:2}.form-success-summary dl>div{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr;gap:2.5rem}.footer-legal{flex-direction:column}.footer-legal>div{flex-wrap:wrap}}
 .photo-card{min-height:320px!important;background-color:#0F1B33!important;background-size:cover!important;background-position:center!important;color:#fff!important;font:600 .9rem 'IBM Plex Mono',monospace!important;letter-spacing:.06em;text-transform:uppercase;box-shadow:inset 0 -100px 100px #071022a8;transition:transform .25s,box-shadow .25s}.photo-card:hover,.photo-card:focus-visible{transform:translateY(-4px);box-shadow:inset 0 -100px 100px #071022c0,0 18px 35px #0f1b3320}.coupon-book{margin-top:.75rem;margin-left:.5rem}
 
+/* Match the homepage proof strip to the larger editorial trust statement treatment. */
+.home-proof-strip .max-w-7xl>div{display:block!important;min-width:0;padding:0;font-family:Poppins,sans-serif;font-size:1.35rem!important;font-weight:700;line-height:1.2}
+.home-proof-strip .max-w-7xl>div strong{display:block;font-family:Poppins,sans-serif;font-size:1.35rem!important;font-weight:700;line-height:1.2;letter-spacing:-.02em;text-transform:none!important}
+.home-proof-strip .max-w-7xl>div span{display:block;font-family:Inter,sans-serif;font-size:.98rem!important;font-weight:400;line-height:1.45;margin-top:.55rem;color:#ffffffbd;letter-spacing:0;text-transform:none!important}
+
 /* Final responsive hardening: override legacy mobile-header positioning. */
 @media(max-width:1023px){
   .nav-shell nav>.brand-link{position:static!important;left:auto!important;transform:none!important;margin:0!important;min-width:0;grid-column:1;justify-self:start}
   .nav-shell nav>.mobile-header-call{position:static!important;inset:auto!important;transform:none!important;margin:0!important;width:auto!important;grid-column:2;justify-self:end}
   .nav-shell nav>.menu-trigger{position:static!important;inset:auto!important;transform:none!important;margin:0!important;grid-column:3;justify-self:end}
   .mobile-call:not(.mobile-header-call){display:none!important}
+}
+
+/* Keep newly introduced finance content contained on narrow viewports. */
+html,body{overflow-x:hidden}
+@media(max-width:767px){
+  .hero-grid>div{width:100%!important;min-width:0!important}
+  .hero-grid>div>*{min-width:0;max-width:100%}
+  .hero-grid h1{font-size:clamp(2.25rem,11.8vw,3rem)!important;line-height:.98!important;letter-spacing:-.045em!important;max-width:100%!important;white-space:normal!important}
+  .hero-grid p{font-size:1rem!important;line-height:1.65!important}
+  .hero-grid h1,.hero-grid p{overflow-wrap:anywhere}
+  .hero-grid .work-order{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box;overflow:hidden}
+  .hero-grid .work-order *{max-width:100%;overflow-wrap:anywhere}
+  .nav-shell nav{min-width:0!important;width:100%!important}
+  .nav-shell nav>*{min-width:0}
+  .site-header .logo-img{max-width:42vw!important}
 }
 @media(max-width:767px){
   html,body{max-width:100%;overflow-x:hidden}
@@ -205,7 +225,9 @@ header.bg-navy nav{position:relative}header.bg-navy nav>a:last-child{font-size:0
 
   .home-proof-strip{padding-top:2.5rem!important;padding-bottom:2.5rem!important}
   .home-proof-strip .max-w-7xl{display:grid!important;grid-template-columns:1fr 1fr!important;gap:1rem!important}
-  .home-proof-strip .max-w-7xl>div{display:flex;align-items:flex-start;min-width:0;font-size:.7rem!important;line-height:1.45!important;padding:.25rem 0}
+  .home-proof-strip .max-w-7xl>div{display:block!important;align-items:initial;min-width:0;font-size:1.05rem!important;line-height:1.25!important;padding:.25rem 0;text-transform:none!important;letter-spacing:0!important}
+  .home-proof-strip .max-w-7xl>div strong{font-size:1.05rem!important;line-height:1.25!important}
+  .home-proof-strip .max-w-7xl>div span{font-size:.82rem!important;line-height:1.45!important;margin-top:.35rem!important}
 
   .homepage main section .rounded-full{touch-action:manipulation}
   .home-services h2{font-size:2.35rem!important;line-height:1.02!important}
