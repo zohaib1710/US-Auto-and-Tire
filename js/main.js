@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const main = document.querySelector('main'); if (main) main.id = 'main-content';
   const serviceLabel = {'oil-and-filter-changes':'Oil & Filter Changes','tire-rotations':'Tire Rotations','wheel-alignments':'Wheel Alignments','brake-inspections':'Brake Inspections','battery-testing':'Battery Testing','fluid-services':'Fluid Services','engine-diagnostics':'Engine Diagnostics','transmission-repairs':'Transmission Repairs','suspension-and-exhaust':'Suspension & Exhaust Repairs'};
   if (main && !['privacy-policy','terms-conditions'].includes(pageName)) {
-    const defaultService = serviceLabel[pageName] || '';
+    const defaultService = detail ? (serviceLabel[pageName] || '') : '';
     const formNode = document.createElement('section');
     formNode.className = 'appointment-section py-20 md:py-28 bg-paper-2';
     formNode.id = 'appointment';
@@ -363,6 +363,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (/Finance/i.test(link.textContent)) { link.textContent = link.textContent.replace(/Finance/gi, 'Finance'); link.href = financeHref; }
   });
   const allowedMakes = ['Toyota','Honda','Nissan','Mazda','Subaru','Mitsubishi','Hyundai','Kia','Volkswagen (VW)','Ford','Chevrolet','Dodge','Chrysler','Jeep','Ram'];
+  const serviceDefaults = {'oil-and-filter-changes':'Oil & Filter Changes','tire-rotations':'Tire Rotations','wheel-alignments':'Wheel Alignments','brake-inspections':'Brake Inspections','battery-testing':'Battery Testing','fluid-services':'Fluid Services','engine-diagnostics':'Engine Diagnostics','transmission-repairs':'Transmission Repairs','suspension-and-exhaust':'Suspension & Exhaust Repairs'};
+  document.querySelectorAll('select[name="requestedService"]').forEach(select => {
+    const desired = detail ? (serviceDefaults[page] || '') : '';
+    select.querySelectorAll('option').forEach(option => option.removeAttribute('selected'));
+    if (desired) [...select.options].find(option => option.textContent.trim() === desired)?.setAttribute('selected', 'selected');
+    select.value = desired;
+  });
   const makesSection = [...document.querySelectorAll('main section')].find(section => /MAKES WE SERVICE/i.test(section.textContent));
   if (makesSection) { const chips = makesSection.querySelector('.flex'); if (chips) chips.innerHTML = allowedMakes.map(make => `<span class="bg-paper-2 rounded-full px-5 py-3 font-poppins">${make}</span>`).join('') + '<span class="make-more-note border border-navy/15 rounded-full px-5 py-3 font-mono text-sm">More makes welcome</span>'; }
   const makeLookup = document.querySelector('[data-make-lookup]');
