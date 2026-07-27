@@ -3,10 +3,10 @@
     'wheel-alignments': {
       headline:'Straight tracking starts with measured geometry.',
       category:'WHEEL & TIRE SERVICE',
-      image:'wheel-alignment-hero.jpg',
+      image:'wheel-alignment-hero.png',
       alt:'Performance vehicle positioned inside an automotive service facility',
       facts:[['TRACKING','Helps correct vehicle pulling'],['TIRE CONTACT','Supports more even tire wear'],['STEERING','Improves steering confidence']],
-      symptoms:['Vehicle pulls left or right','Steering wheel sits off-center','Tires wear unevenly','Steering feels unstable'],
+      symptoms:['Vehicle pulls left or right','Steering wheel sits off center','Tires wear unevenly','Steering feels unstable'],
       symptomDisclaimer:'These symptoms may have several causes. An inspection helps determine whether alignment or another tire, steering, brake, or suspension issue is involved.',
       technicalTitle:'Three angles shape the way a vehicle meets the road.',
       technicalIntro:'Alignment is a group of measurements, not one adjustment. Vehicle design determines which angles can be corrected and which readings may point to worn or damaged parts.',
@@ -14,9 +14,9 @@
       processTitles:['Initial inspection','Measurement','Adjustment','Final verification'],
       process:['Review tires, steering behavior, visible wear, and relevant suspension concerns.','Measure current alignment angles using alignment equipment.','Make supported adjustments toward the appropriate vehicle specifications.','Recheck measurements and confirm steering-wheel position and vehicle tracking.'],
       processNote:'Available adjustments vary by vehicle design and component condition.',
-      concept:{title:'Small angles can create noticeable changes.',before:['Uneven wheel direction','Off-center steering','Irregular tire contact'],after:['Wheels tracking consistently','Steering centered','More even road contact']},
+      concept:{title:'Small angles can create noticeable changes.',before:['Uneven wheel direction','off center steering','Irregular tire contact'],after:['Wheels tracking consistently','Steering centered','More even road contact']},
       compareTitle:'Not every pull is an alignment problem.',
-      compare:[['DRIVER SIGNAL','POSSIBLE AREAS','INSPECTION PATH'],['VEHICLE PULLING','Alignment, tire pressure, tire condition or brakes','Compare tires, tracking and braking behavior'],['VIBRATION AT SPEED','Wheel balance, tires, wheels or suspension','Recreate the speed-related symptom'],['OFF-CENTER WHEEL','Alignment or steering geometry','Measure geometry and steering center'],['UNEVEN TREAD WEAR','Alignment, inflation, rotation or suspension','Read the full tread pattern']],
+      compare:[['DRIVER SIGNAL','POSSIBLE AREAS','INSPECTION PATH'],['VEHICLE PULLING','Alignment, tire pressure, tire condition or brakes','Compare tires, tracking and braking behavior'],['VIBRATION AT SPEED','Wheel balance, tires, wheels or suspension','Recreate the speed-related symptom'],['off center WHEEL','Alignment or steering geometry','Measure geometry and steering center'],['UNEVEN TREAD WEAR','Alignment, inflation, rotation or suspension','Read the full tread pattern']],
       outcomes:[['Tire wear','Poor alignment can contribute to irregular tread wear.'],['Vehicle control','Correct tracking supports more predictable steering behavior.'],['Suspension awareness','Alignment measurements can help identify when another steering or suspension concern needs attention.']],
       outcomesTitle:'More than a straighter steering wheel.',
       causes:['Potholes and road impacts','Curb contact','Worn steering components','Worn suspension components','Tire or wheel changes','Normal component wear','Previous repair work','Ride-height changes'],
@@ -25,7 +25,7 @@
       appointmentCopy:'Request an appointment and tell us what you are noticing. The team will contact you to confirm availability.',
       approvalTitle:'Measured first. Explained clearly. Approved before work.',
       approvalCopy:'The team reviews the findings with you before moving forward with recommended adjustments or related repairs.',
-      faq:[['How do I know whether my vehicle needs an alignment?','Pulling, an off-center steering wheel or uneven tread wear are useful reasons to request an inspection.'],['Is an alignment the same as tire balancing?','No. Alignment measures wheel and steering geometry. Balancing corrects weight variation in a wheel-and-tire assembly.'],['Can worn tires affect alignment results?','Tire condition can affect how the vehicle feels and should be considered with the measurements.'],['Why is my steering wheel off-center?','Alignment or steering geometry may be involved, but inspection is needed to determine the cause.'],['Should I get an alignment after replacing tires?','It can help protect new tires when the previous set shows unusual wear or the vehicle does not track correctly.'],['How long does an alignment take?','Service time depends on the vehicle, current measurements, and whether worn or damaged components are found.'],['Is my appointment request immediately confirmed?','No. The team will contact you to confirm availability.']],
+      faq:[['How do I know whether my vehicle needs an alignment?','Pulling, an off center steering wheel or uneven tread wear are useful reasons to request an inspection.'],['Is an alignment the same as tire balancing?','No. Alignment measures wheel and steering geometry. Balancing corrects weight variation in a wheel-and-tire assembly.'],['Can worn tires affect alignment results?','Tire condition can affect how the vehicle feels and should be considered with the measurements.'],['Why is my steering wheel off center?','Alignment or steering geometry may be involved, but inspection is needed to determine the cause.'],['Should I get an alignment after replacing tires?','It can help protect new tires when the previous set shows unusual wear or the vehicle does not track correctly.'],['How long does an alignment take?','Service time depends on the vehicle, current measurements, and whether worn or damaged components are found.'],['Is my appointment request immediately confirmed?','No. The team will contact you to confirm availability.']],
       related:[['tire-rotations.html','Tire Rotations'],['suspension-and-exhaust.html','Suspension & Exhaust'],['brake-inspections.html','Brake Inspections']],
       cta:'Ready for a straighter, more confident drive?',
       ctaCopy:'Request a wheel alignment appointment or call the shop to discuss what your vehicle is doing.',
@@ -43,11 +43,11 @@
       related:[['fluid-services.html','Fluid Services'],['engine-diagnostics.html','Engine Diagnostics'],['battery-testing.html','Battery Testing']], cta:'Give your engine a service built around its specification.', visual:'oil'
     },
     'tire-rotations': {
-      headline:'Even wear begins with the right rotation pattern.', category:'TREAD WEAR / TIRE INSPECTION', image:'tire-rotation-hero.jpg', alt:'Technician rotating tires on a vehicle lift',
+      headline:'Even wear begins with the right rotation pattern.', category:'TREAD WEAR / TIRE INSPECTION', image:'tire-rotation-hero.png', alt:'Technician rotating tires on a vehicle lift',
       facts:[['THE PATTERN','Vehicle and tire configuration determine movement'],['THE INSPECTION','Tread depth, pressure and visible condition'],['THE LIMIT','Directional or staggered setups may restrict rotation']],
       technicalTitle:'The tire layout determines the rotation map.', technicalIntro:'A square setup may allow front-to-rear or cross rotation. Directional tread, staggered sizing and specialty fitments can limit those patterns.',
       technical:[['Square fitment','All four sizes match, allowing the broadest pattern choices.'],['Directional tread','The tire must continue rotating in its designed direction.'],['Staggered fitment','Different front and rear sizes usually cannot exchange axles.']],
-      compareTitle:'Rotation, balancing and alignment answer different questions.', compare:[['SERVICE','PRIMARY PURPOSE','COMMON CLUE'],['ROTATION','Redistribute tire positions','Front-to-rear wear difference'],['BALANCING','Correct weight variation','Speed-related vibration'],['ALIGNMENT','Measure steering geometry','Pulling, off-center wheel or edge wear']],
+      compareTitle:'Rotation, balancing and alignment answer different questions.', compare:[['SERVICE','PRIMARY PURPOSE','COMMON CLUE'],['ROTATION','Redistribute tire positions','Front-to-rear wear difference'],['BALANCING','Correct weight variation','Speed-related vibration'],['ALIGNMENT','Measure steering geometry','Pulling, off center wheel or edge wear']],
       outcomes:[['More even wear opportunity','Correct movement can help share axle-specific wear.'],['Earlier pattern detection','Cupping, feathering and pressure concerns become easier to compare.'],['Fitment clarity','You learn what pattern the tire setup permits.']],
       causes:['Drive-axle load','Cornering and braking','Pressure variation','Alignment geometry','Worn suspension','Directional tread','Staggered sizing','Delayed rotation history'],
       faq:[['Can every tire be rotated?','No. Directional, staggered and specialty setups have limits.'],['Will rotation fix vibration?','Not necessarily. Balance, wheel condition, alignment and suspension can also cause it.'],['How is abnormal wear identified?','The inner, center and outer tread are compared across all positions.'],['Should pressure be checked?','Yes. Pressure influences wear.'],['Can rotation reverse existing wear?','No. It cannot restore tread already worn away.']],
@@ -65,18 +65,18 @@
       related:[['fluid-services.html','Fluid Services'],['tire-rotations.html','Tire Rotations'],['suspension-and-exhaust.html','Suspension & Exhaust']], cta:'Turn a brake concern into a measured plan.', visual:'brakes'
     },
     'battery-testing': {
-      headline:'A no-start deserves a circuit check, not a first guess.', category:'STARTING / CHARGING SYSTEM', image:'battery-testing-hero.jpg', alt:'Technician testing a vehicle battery',
-      facts:[['THE SYMPTOM','Slow crank, no-start or repeated jump'],['THE TEST PATH','Battery, connections, starting and charging'],['THE VEHICLE NOTE','Some models require battery registration']],
+      headline:'A no start deserves a circuit check, not a first guess.', category:'STARTING / CHARGING SYSTEM', image:'battery-testing-hero.png', alt:'Technician testing a vehicle battery',
+      facts:[['THE SYMPTOM','Slow crank, no start or repeated jump'],['THE TEST PATH','Battery, connections, starting and charging'],['THE VEHICLE NOTE','Some models require battery registration']],
       technicalTitle:'Starting and charging form one electrical loop.', technicalIntro:'The battery supplies starting energy, the starter uses it, and the charging system replenishes it. Connections influence every stage.',
       technical:[['Stored energy','Condition and state of charge are related but not identical.'],['Starting demand','The starter and cable path place a measurable load on the battery.'],['Charging recovery','Charging behavior shows whether energy is restored.']],
       compareTitle:'Testing distinguishes several similar symptoms.', compare:[['POSSIBILITY','USEFUL CLUE','NEXT CHECK'],['BATTERY','Low starting performance','Charge state and battery test'],['CONNECTION / STARTER','Abnormal cranking behavior','Cable path and starting demand'],['CHARGE / DRAW','Battery goes flat again','Charging output or parked draw']],
-      outcomes:[['Evidence before replacement','Testing avoids treating every no-start alike.'],['Vehicle-specific guidance','Battery type, location and registration are considered.'],['A clearer next step','Charge, replace or continue testing based on evidence.']],
+      outcomes:[['Evidence before replacement','Testing avoids treating every no start alike.'],['Vehicle-specific guidance','Battery type, location and registration are considered.'],['A clearer next step','Charge, replace or continue testing based on evidence.']],
       causes:['Battery age and heat','Low state of charge','Corroded connection','Starter demand','Charging concern','Vehicle left unused','Parked electrical draw','Incorrect battery setup'],
       faq:[['Does a battery test include the alternator?','It can reveal clues, but charging needs its own checks.'],['Why did a new battery go flat?','Charging, connection or parked-draw concerns can affect it.'],['Does heat shorten battery life?','Heat can accelerate wear.'],['What is battery registration?','Some vehicles require the management system to be updated after replacement.'],['Is a jump start a diagnosis?','No. It does not identify why power was low.']],
       related:[['engine-diagnostics.html','Engine Diagnostics'],['oil-and-filter-changes.html','Oil & Filter Changes'],['fluid-services.html','Fluid Services']], cta:'Find what the starting system is actually telling you.', visual:'battery'
     },
     'fluid-services': {
-      headline:'Every fluid has a system, a specification and a job.', category:'SYSTEM PROTECTION / VEHICLE SPECIFICATIONS', image:'fluid-services-hero.jpg', alt:'Technician inspecting vehicle fluid reservoirs',
+      headline:'Every fluid has a system, a specification and a job.', category:'SYSTEM PROTECTION / VEHICLE SPECIFICATIONS', image:'fluid-services-hero.png', alt:'Technician inspecting vehicle fluid reservoirs',
       facts:[['THE SYSTEMS','Brake, coolant, transmission and more'],['THE STANDARD','Vehicle-specific fluid requirements'],['THE DECISION','Inspect, service, repair a leak or monitor']],
       technicalTitle:'Different fluids protect different operating systems.', technicalIntro:'The same visual symptom can mean different things by circuit. Type, level, condition and source need to be interpreted in context.',
       technical:[['Cooling circuit','Coolant carries heat and protects system materials.'],['Hydraulic circuit','Brake and steering fluids transfer force.'],['Lubrication circuit','Driveline fluids protect surfaces and manage heat.']],
@@ -84,7 +84,7 @@
       outcomes:[['Correct specification','Choice starts with system requirements.'],['Leak-aware service','A low level is treated as information.'],['Maintenance context','History and condition shape the recommendation.']],
       causes:['Maintenance interval','Unknown history','Seal or hose leak','Reservoir concern','Heat exposure','Incorrect prior fluid','Component wear','Contamination'],
       faq:[['Should every fluid be flushed on a schedule?','Not necessarily. Vehicle guidance, condition and use matter.'],['Can low fluid trigger a warning?','It can, but a sensor or fault may also be involved.'],['Do vehicles use different fluids?','Yes. Specifications vary by model and system.'],['Is topping off the same as servicing?','No. A low level may need its cause understood.'],['Can fluids be mixed?','Compatibility depends on the exact specification.']],
-      related:[['oil-and-filter-changes.html','Oil & Filter Changes'],['brake-inspections.html','Brake Inspections'],['transmission-repairs.html','Transmission Repairs']], cta:'Match the service to the system—not a generic schedule.', visual:'fluids'
+      related:[['oil-and-filter-changes.html','Oil & Filter Changes'],['brake-inspections.html','Brake Inspections'],['transmission-repairs.html','Transmission Repairs']], cta:'Match the service to the system, not a generic schedule.', visual:'fluids'
     },
     'engine-diagnostics': {
       headline:'A trouble code is a clue, not a parts order.', category:'FAULT TRACING / TEST AND VERIFICATION', image:'live-engine.jpeg', alt:'Engine compartment undergoing diagnostic inspection',
@@ -92,7 +92,7 @@
       technicalTitle:'Diagnosis moves from signal to verified cause.', technicalIntro:'A code identifies a condition the vehicle detected. Data, inspection and targeted testing determine why it exists.',
       technical:[['Capture context','Symptoms and stored information frame the problem.'],['Build a test path','Related data and components are checked logically.'],['Verify the result','The finding is compared with expected operation.']],
       compareTitle:'Scanning and diagnosing are not the same task.', compare:[['STAGE','WHAT IT PROVIDES','WHAT IT DOES NOT PROVE'],['CODE SCAN','Stored messages and clues','Which part must be replaced'],['INSPECTION & TEST','Evidence about the condition','That unrelated systems are fine'],['VERIFICATION','Cause explains the symptom','That no future issue can occur']],
-      outcomes:[['Less guesswork','Testing reduces parts replacement based only on a code.'],['Plain-language findings','The fault path and limits are explained.'],['Repair priority','Related codes become a useful next step.']],
+      outcomes:[['Less guesswork','Testing reduces parts replacement based only on a code.'],['plain language findings','The fault path and limits are explained.'],['Repair priority','Related codes become a useful next step.']],
       causes:['Sensor input','Wiring or connection','Air or vacuum leak','Fuel delivery','Ignition fault','Mechanical condition','Emissions fault','Module communication'],
       faq:[['Does a code name the failed part?','No. It identifies a detected condition.'],['Does clearing a code fix it?','No. It removes information without correcting the cause.'],['Why can one problem create many codes?','Systems share data, so one fault can trigger related messages.'],['Can the light turn off itself?','Yes, while stored information may remain useful.'],['What should I bring?','Note when it occurs, how the vehicle feels and recent events.']],
       related:[['battery-testing.html','Battery Testing'],['oil-and-filter-changes.html','Oil & Filter Changes'],['transmission-repairs.html','Transmission Repairs']], cta:'Turn the warning into a testable question.', visual:'diagnostics'
@@ -109,7 +109,7 @@
       related:[['fluid-services.html','Fluid Services'],['engine-diagnostics.html','Engine Diagnostics'],['suspension-and-exhaust.html','Suspension & Exhaust']], cta:'Start with the shift pattern, then build the repair decision.', visual:'transmission'
     },
     'suspension-and-exhaust': {
-      headline:'Trace the noise to the system before replacing by sound.', category:'RIDE CONTROL / EXHAUST INTEGRITY', image:'suspension-exhaust-hero.jpg', alt:'Technician inspecting suspension and exhaust components under a vehicle',
+      headline:'Trace the noise to the system before replacing by sound.', category:'RIDE CONTROL / EXHAUST INTEGRITY', image:'suspension-exhaust-hero.png', alt:'Technician inspecting suspension and exhaust components under a vehicle',
       facts:[['RIDE & CONTROL','Springs, dampers, links and bushings'],['EXHAUST PATH','Pipes, shields, hangers and leak areas'],['THE METHOD','Recreate, isolate and explain the symptom']],
       technicalTitle:'Two underbody systems tell different stories.', technicalIntro:'Suspension manages wheel movement and body control. Exhaust carries gases through supported components. Location and conditions separate the source.',
       technical:[['Support & control','Springs carry load while dampers and links manage movement.'],['Joints & isolation','Bushings and mounts locate parts while limiting harshness.'],['Exhaust route','Pipes, shields and hangers guide flow and control vibration.']],
