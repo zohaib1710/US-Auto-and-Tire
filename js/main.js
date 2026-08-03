@@ -160,6 +160,184 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+  if (pageName === 'index') {
+    const imagePath = file => `${base}assets/images/homepage/${file}`;
+    const createImage = ({ file, alt, width, height, className = '' }) => {
+      const image = document.createElement('img');
+      image.src = imagePath(file);
+      image.alt = alt;
+      image.width = width;
+      image.height = height;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      if (className) image.className = className;
+      return image;
+    };
+    const createFigure = (className, imageOptions) => {
+      const figure = document.createElement('figure');
+      figure.className = `home-media ${className}`;
+      figure.appendChild(createImage(imageOptions));
+      return figure;
+    };
+
+    const clarityCopy = document.querySelector('.clarity-intro > div > div:first-child');
+    if (clarityCopy && !clarityCopy.querySelector('.home-clarity-media')) {
+      clarityCopy.appendChild(createFigure('home-clarity-media', {
+        file: 'clarity-inspection.webp',
+        alt: 'Technician reviewing vehicle inspection results with a customer',
+        width: 1200,
+        height: 800
+      }));
+    }
+
+    const serviceImages = [
+      ['service-oil-change.webp', 'Technician performing an oil and filter change'],
+      ['service-tire-rotation.webp', 'Technician rotating tires in a service bay'],
+      ['service-wheel-alignment.webp', 'Passenger car positioned for a wheel alignment'],
+      ['service-brake-inspection.webp', 'Technician inspecting a brake rotor and caliper'],
+      ['service-battery-test.webp', 'Technician testing a vehicle battery'],
+      ['service-fluid-check.webp', 'Technician checking vehicle fluids under the hood'],
+      ['service-engine-diagnostics.webp', 'Technician diagnosing an engine with a scan tool'],
+      ['service-transmission-inspection.webp', 'Technician inspecting a transmission from below'],
+      ['service-suspension-inspection.webp', 'Technician inspecting front suspension components']
+    ];
+    document.querySelectorAll('.home-services .service-card').forEach((card, index) => {
+      const imageData = serviceImages[index];
+      if (!imageData || card.querySelector('.service-card-image')) return;
+      card.prepend(createImage({
+        file: imageData[0],
+        alt: imageData[1],
+        width: 640,
+        height: 400,
+        className: 'service-card-image'
+      }));
+    });
+
+    const process = document.querySelector('.home-process');
+    const processCta = process?.querySelector('.process-cta');
+    if (process && processCta && !process.querySelector('.home-process-media')) {
+      processCta.before(createFigure('home-process-media', {
+        file: 'repair-journey.webp',
+        alt: 'Customer, service advisor, and technician coordinating a vehicle repair visit',
+        width: 1440,
+        height: 720
+      }));
+    }
+
+    const explainerCopy = document.querySelector('.work-order-explainer .grid > div:first-child');
+    if (explainerCopy && !explainerCopy.querySelector('.home-precision-media')) {
+      explainerCopy.appendChild(createFigure('home-precision-media', {
+        file: 'precision-workshop.webp',
+        alt: 'Technician completing precise engine bay work',
+        width: 1200,
+        height: 800
+      }));
+    }
+
+    const galleryImages = [
+      ['gallery-diagnostics.webp', 'Technician using diagnostic equipment beside an open engine bay'],
+      ['gallery-brake-service.webp', 'Technician measuring a brake rotor during wheel service'],
+      ['gallery-engine-inspection.webp', 'Technician inspecting an engine bay with a work light'],
+      ['gallery-underbody.webp', 'Technician inspecting the underside of a vehicle']
+    ];
+    const galleryCards = [...document.querySelectorAll('.home-gallery-card')];
+    galleryCards.forEach((card, index) => {
+      const imageData = galleryImages[index];
+      if (!imageData || card.querySelector('.home-gallery-image-asset')) return;
+      const image = createImage({
+        file: imageData[0],
+        alt: imageData[1],
+        width: 1200,
+        height: 900,
+        className: 'home-gallery-image-asset'
+      });
+      card.prepend(image);
+      card.style.backgroundImage = 'none';
+      card.setAttribute('aria-label', image.alt);
+    });
+    const prepareGalleryLightbox = () => {
+      galleryCards.forEach(card => {
+        const image = card.querySelector('.home-gallery-image-asset');
+        if (image) card.style.backgroundImage = `url("${image.currentSrc || image.src}")`;
+      });
+    };
+    galleryCards.forEach(card => {
+      card.addEventListener('click', prepareGalleryLightbox, true);
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') prepareGalleryLightbox();
+      }, true);
+    });
+    if (galleryCards.length && !galleryCards[0].hasAttribute('role') && document.querySelector('.home-gallery-lightbox')) {
+      const staleModal = document.querySelector('.home-gallery-lightbox');
+      const modal = staleModal?.cloneNode(true);
+      if (staleModal && modal) staleModal.replaceWith(modal);
+      let activeIndex = 0;
+      const renderGalleryImage = () => {
+        const card = galleryCards[activeIndex];
+        const image = card.querySelector('.home-gallery-image-asset');
+        const caption = card.querySelector('span')?.textContent.trim() || image.alt;
+        modal.querySelector('.home-gallery-image').style.backgroundImage = `url("${image.currentSrc || image.src}")`;
+        modal.querySelector('.home-gallery-image').setAttribute('aria-label', image.alt);
+        modal.querySelector('.home-gallery-caption').textContent = caption;
+      };
+      const openGallery = index => {
+        activeIndex = index;
+        renderGalleryImage();
+        modal.hidden = false;
+        document.body.classList.add('lightbox-open');
+        modal.querySelector('.home-gallery-close').focus();
+      };
+      const closeGallery = () => {
+        modal.hidden = true;
+        document.body.classList.remove('lightbox-open');
+      };
+      galleryCards.forEach((card, index) => {
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.addEventListener('click', () => openGallery(index));
+        card.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openGallery(index);
+          }
+        });
+      });
+      modal.querySelector('.home-gallery-close').addEventListener('click', closeGallery);
+      modal.querySelector('.home-gallery-prev').addEventListener('click', () => {
+        activeIndex = (activeIndex + galleryCards.length - 1) % galleryCards.length;
+        renderGalleryImage();
+      });
+      modal.querySelector('.home-gallery-next').addEventListener('click', () => {
+        activeIndex = (activeIndex + 1) % galleryCards.length;
+        renderGalleryImage();
+      });
+      modal.addEventListener('click', event => {
+        if (event.target === modal) closeGallery();
+      });
+      addEventListener('keydown', event => {
+        if (modal.hidden) return;
+        if (event.key === 'Escape') closeGallery();
+        if (event.key === 'ArrowLeft') modal.querySelector('.home-gallery-prev').click();
+        if (event.key === 'ArrowRight') modal.querySelector('.home-gallery-next').click();
+      });
+    }
+
+    const financing = [...document.querySelectorAll('main section')].find(section =>
+      /A CLEARER WAY TO PAY/i.test(section.textContent)
+    );
+    if (financing && !financing.querySelector('.home-financing-image')) {
+      financing.classList.add('home-financing-media');
+      const image = createImage({
+        file: 'financing-consultation.webp',
+        alt: '',
+        width: 1200,
+        height: 800,
+        className: 'home-financing-image'
+      });
+      image.setAttribute('aria-hidden', 'true');
+      financing.prepend(image);
+    }
+  }
   if (pageName === 'about') { document.querySelectorAll('main section').forEach(section => { if (/Team bio placeholder/i.test(section.textContent)) section.remove(); }); }
 
   const serviceDetails = {
@@ -196,6 +374,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const showStep = n => { const names = ['Service','Vehicle & time','Contact']; step = n; stepPanels.forEach(panel => { const active = +panel.dataset.wizardPanel === n; panel.hidden = !active; panel.classList.toggle('active', active); }); stepLabels.forEach((label, i) => label.classList.toggle('active', i < n)); progress.style.width = `${n / 3 * 100}%`; mobileStep.textContent = `Step ${n} of 3 · ${names[n - 1]}`; back.hidden = n === 1; next.hidden = n === 3; submit.hidden = n !== 3; const heading = stepPanels[n - 1].querySelector('h3'); announcement.textContent = `Step ${n} of 3: ${heading.textContent}`; heading?.focus({preventScroll:true}); };
       const validateStep = () => { let valid = true, firstInvalid = null; stepPanels[step - 1].querySelectorAll('[required]').forEach(field => { field.classList.remove('input-error'); if (!field.checkValidity()) { field.classList.add('input-error'); firstInvalid ||= field; valid = false; } }); const phone = form.querySelector('[name="phone"]'); if (step === 3 && phone && !/^[+\d\s().-]{7,}$/.test(phone.value)) { phone.classList.add('input-error'); firstInvalid ||= phone; valid = false; } if (!valid) { announcement.textContent = 'Please complete the required fields in this step.'; firstInvalid?.focus(); } return valid; };
       next.addEventListener('click', () => { if (validateStep()) showStep(Math.min(3, step + 1)); }); back.addEventListener('click', () => showStep(Math.max(1, step - 1))); form.querySelectorAll('input,select,textarea').forEach(field => { const key = `usautos-${field.name}`; try { const saved = sessionStorage.getItem(key); if (saved && field.type !== 'radio' && field.type !== 'checkbox') field.value = saved; } catch {} field.addEventListener('input', () => { field.classList.remove('input-error'); try { if (field.type !== 'radio' && field.type !== 'checkbox') sessionStorage.setItem(key, field.value); } catch {} }); field.addEventListener('change', () => { field.classList.remove('input-error'); try { sessionStorage.setItem(key, field.value); } catch {} }); }); showStep(1);
+    }
+    if (pageName === 'index') {
+      const appointmentCopy = formNode.querySelector('.appointment-note')?.parentElement;
+      if (appointmentCopy && !appointmentCopy.querySelector('.home-appointment-media')) {
+        const figure = document.createElement('figure');
+        figure.className = 'home-media home-appointment-media';
+        figure.innerHTML = '<img src="assets/images/homepage/appointment-arrival.webp" alt="Service advisor welcoming a customer at the repair shop" width="1200" height="800" loading="lazy" decoding="async">';
+        appointmentCopy.appendChild(figure);
+      }
     }
   }
   if (main && !detail && !main.querySelector('[data-car-console]')) {

@@ -511,3 +511,175 @@ html,body{overflow-x:hidden}
 .address-link:focus-visible {
   color:#C8202A;
 }
+
+/* Homepage photography campaign */
+.home-media {
+  overflow: hidden;
+  border: 1px solid rgba(15, 27, 51, .12);
+  border-radius: 1.1rem;
+  background: #dfe2e4;
+  box-shadow: 0 20px 44px rgba(15, 27, 51, .12);
+}
+
+.home-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-clarity-media,
+.home-precision-media,
+.home-appointment-media {
+  aspect-ratio: 3 / 2;
+  margin-top: 2.25rem;
+}
+
+.home-clarity-media img {
+  object-position: center 42%;
+}
+
+.home-services .service-card {
+  overflow: hidden;
+}
+
+.home-services .service-card-image {
+  display: block;
+  width: calc(100% + 4rem);
+  max-width: none;
+  aspect-ratio: 16 / 10;
+  margin: -2rem -2rem 1.45rem;
+  object-fit: cover;
+  background: #dfe2e4;
+}
+
+.home-process-media {
+  aspect-ratio: 2 / 1;
+  margin-top: 3rem;
+}
+
+.home-process-media img {
+  object-position: center 48%;
+}
+
+.home-precision-media img {
+  object-position: center 44%;
+}
+
+.home-gallery-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.home-gallery-card::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 35% 0 0;
+  background: linear-gradient(180deg, transparent, rgba(7, 16, 34, .82));
+  pointer-events: none;
+}
+
+.home-gallery-image-asset {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .45s ease;
+}
+
+.home-gallery-card:hover .home-gallery-image-asset,
+.home-gallery-card:focus-visible .home-gallery-image-asset {
+  transform: scale(1.035);
+}
+
+.home-gallery-card > span {
+  position: relative;
+  z-index: 1;
+}
+
+.home-financing-media {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.home-financing-media::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, #0f1b33 0%, #0f1b33 46%, rgba(15, 27, 51, .92) 68%, rgba(15, 27, 51, .68) 100%);
+  pointer-events: none;
+}
+
+.home-financing-media > .home-financing-image {
+  position: absolute;
+  z-index: -2;
+  inset: 0 0 0 auto;
+  width: 58%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.home-financing-media > .max-w-7xl {
+  position: relative;
+  z-index: 1;
+}
+
+.home-appointment-media img {
+  object-position: center 38%;
+}
+
+@media (max-width: 1023px) {
+  .home-clarity-media,
+  .home-precision-media,
+  .home-appointment-media {
+    max-height: 31rem;
+  }
+
+  .home-financing-media::after {
+    background: rgba(15, 27, 51, .9);
+  }
+
+  .home-financing-media > .home-financing-image {
+    width: 100%;
+    opacity: .52;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-clarity-media,
+  .home-precision-media,
+  .home-appointment-media {
+    aspect-ratio: 4 / 3;
+    margin-top: 1.75rem;
+    border-radius: .9rem;
+  }
+
+  .home-services .service-card-image {
+    width: calc(100% + 2.7rem);
+    margin: -1.35rem -1.35rem 1.15rem;
+  }
+
+  .home-process-media {
+    aspect-ratio: 4 / 3;
+    margin-top: 2.25rem;
+  }
+
+  .home-process-media img {
+    object-position: 58% center;
+  }
+
+  .home-gallery-card::after {
+    inset: 25% 0 0;
+  }
+
+  .home-financing-media > .home-financing-image {
+    object-position: 64% center;
+  }
+}
