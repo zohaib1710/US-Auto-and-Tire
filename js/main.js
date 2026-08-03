@@ -595,3 +595,87 @@ document.addEventListener('DOMContentLoaded', () => {
   mobileContainment.textContent = '@media (max-width:767px){main section .max-w-7xl{width:calc(100vw - 48px)!important;max-width:calc(100vw - 48px)!important}.hero-grid h1{display:block!important;width:100%!important;max-width:100%!important;font-size:clamp(2.25rem,11.8vw,3rem)!important;line-height:.98!important;white-space:normal!important;overflow-wrap:anywhere!important}.finance-page .hero-grid h1{font-size:2rem!important;letter-spacing:-.04em!important}.hero-grid h1~p{font-size:1rem!important;line-height:1.65!important;max-width:100%!important;overflow-wrap:anywhere!important}.hero-grid .work-order{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important;overflow:hidden!important}.hero-grid>div{min-width:0!important;width:100%!important}}';
   document.head.append(mobileContainment);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionTargets = new Set();
+  const variants = ['motion-rise', 'motion-slide-left', 'motion-slide-right', 'motion-scale', 'motion-soft-focus'];
+
+  const registerMotion = (element, variant = 'motion-rise', delay = 0) => {
+    if (!element || element.classList.contains('reveal') || element.classList.contains('motion-item')) return;
+    element.classList.add('motion-item', variant);
+    element.style.setProperty('--motion-delay', `${Math.min(delay, 360)}ms`);
+    motionTargets.add(element);
+  };
+
+  document.querySelectorAll('.site-header .header-utility, .site-header .nav-shell').forEach((element, index) => {
+    element.classList.add('motion-header-part');
+    element.style.setProperty('--motion-delay', `${index * 90}ms`);
+  });
+
+  const hero = document.querySelector('main > section:first-child');
+  if (hero) {
+    const heroCopy = hero.querySelector(':scope > div > div:first-child');
+    [...(heroCopy?.children || [])].forEach((element, index) => registerMotion(element, 'motion-rise', index * 75));
+    registerMotion(hero.querySelector('.work-order, .service-hero-media, .finance-hero-card'), 'motion-slide-right', 170);
+  }
+
+  document.querySelectorAll('main > section').forEach((section, sectionIndex) => {
+    if (section === hero) return;
+    const variant = variants[sectionIndex % variants.length];
+    const eyebrow = section.querySelector('.eyebrow');
+    const heading = section.querySelector('h2');
+    const intro = heading?.nextElementSibling?.matches('p') ? heading.nextElementSibling : null;
+    registerMotion(eyebrow, variant, 0);
+    registerMotion(heading, variant, 70);
+    registerMotion(intro, 'motion-rise', 130);
+  });
+
+  const staggerGroups = [
+    '.home-services .service-card',
+    '.action-card-grid .action-card',
+    '.finance-provider-card',
+    '.home-process .grid > div',
+    '.trust-statements .max-w-7xl > div',
+    '.detail-list li',
+    '.process-list li',
+    '.service-faq .faq-item',
+    '.site-faq-list .faq-item',
+    '[data-gallery-card]',
+    '.footer-grid > *'
+  ];
+  staggerGroups.forEach((selector, groupIndex) => {
+    document.querySelectorAll(selector).forEach((element, index) => {
+      const variant = groupIndex % 3 === 0 ? 'motion-rise' : groupIndex % 3 === 1 ? 'motion-scale' : 'motion-slide-left';
+      registerMotion(element, variant, (index % 6) * 65);
+    });
+  });
+
+  document.querySelectorAll('main img:not(.logo-img)').forEach((image, index) => {
+    registerMotion(image, 'motion-image-wipe', (index % 3) * 70);
+  });
+  document.querySelectorAll('.clarity-panel, .work-order-explainer .bg-navy, .appointment-form, .console-visual').forEach((panel, index) => {
+    registerMotion(panel, index % 2 ? 'motion-slide-right' : 'motion-scale', 100);
+  });
+
+  document.documentElement.classList.add('motion-enabled');
+  requestAnimationFrame(() => document.documentElement.classList.add('motion-page-ready'));
+
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    motionTargets.forEach(element => element.classList.add('motion-visible'));
+    return;
+  }
+
+  const motionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('motion-visible');
+      motionObserver.unobserve(entry.target);
+    });
+  }, {
+    threshold: .1,
+    rootMargin: '0px 0px -7% 0px'
+  });
+
+  motionTargets.forEach(element => motionObserver.observe(element));
+});

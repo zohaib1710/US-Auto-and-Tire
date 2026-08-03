@@ -683,3 +683,114 @@ html,body{overflow-x:hidden}
     object-position: 64% center;
   }
 }
+
+/* Shared entrance and scroll motion */
+.motion-enabled .motion-item {
+  --motion-delay: 0ms;
+  opacity: 0;
+  transition:
+    opacity .72s cubic-bezier(.22, 1, .36, 1) var(--motion-delay),
+    translate .82s cubic-bezier(.22, 1, .36, 1) var(--motion-delay),
+    scale .82s cubic-bezier(.22, 1, .36, 1) var(--motion-delay),
+    filter .72s ease var(--motion-delay),
+    clip-path .9s cubic-bezier(.22, 1, .36, 1) var(--motion-delay);
+  will-change: opacity, translate, scale, filter, clip-path;
+}
+
+.motion-enabled .motion-rise {
+  translate: 0 2rem;
+}
+
+.motion-enabled .motion-slide-left {
+  translate: -2.5rem 0;
+}
+
+.motion-enabled .motion-slide-right {
+  translate: 2.5rem 0;
+}
+
+.motion-enabled .motion-scale {
+  scale: .955;
+}
+
+.motion-enabled .motion-soft-focus {
+  translate: 0 1.1rem;
+  filter: blur(7px);
+}
+
+.motion-enabled .motion-image-wipe {
+  opacity: .35;
+  translate: 0 1rem;
+  scale: 1.025;
+  clip-path: inset(0 0 100% 0 round .75rem);
+}
+
+.motion-enabled .motion-item.motion-visible {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  filter: none;
+  clip-path: none;
+}
+
+.motion-enabled .motion-image-wipe.motion-visible {
+  clip-path: inset(-3% -2% -5% -2% round 0);
+}
+
+/* Preserve space for large-heading descenders such as g, y, and p. */
+.hero-grid h1,
+.service-hero-copy h1 {
+  padding-bottom: .08em;
+}
+
+@media (max-width: 767px) {
+  .service-hero-copy {
+    overflow: visible;
+  }
+}
+
+.motion-header-part {
+  opacity: 0;
+  translate: 0 -1rem;
+}
+
+.motion-page-ready .motion-header-part {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity .55s ease var(--motion-delay),
+    translate .7s cubic-bezier(.22, 1, .36, 1) var(--motion-delay);
+}
+
+@media (max-width: 767px) {
+  .motion-enabled .motion-slide-left,
+  .motion-enabled .motion-slide-right {
+    translate: 0 1.5rem;
+  }
+
+  .motion-enabled .motion-item {
+    transition-duration: .6s, .68s, .68s, .6s, .72s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-enabled .motion-item,
+  .motion-header-part,
+  .motion-page-ready .motion-header-part {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}
+
+/* Keep the desktop Services menu aligned with its trigger and inside the viewport. */
+@media (min-width: 1024px) {
+  .services-dropdown {
+    left: 0;
+    right: auto;
+    transform: none;
+  }
+}
