@@ -652,7 +652,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelectorAll('main img:not(.logo-img)').forEach((image, index) => {
-    registerMotion(image, 'motion-image-wipe', (index % 3) * 70);
+    const container = image.closest('figure, .home-media, [data-gallery-card], .home-gallery-card, .compare-box');
+    if (container) registerMotion(container, 'motion-image-wipe', (index % 3) * 70);
   });
   document.querySelectorAll('.clarity-panel, .work-order-explainer .bg-navy, .appointment-form, .console-visual').forEach((panel, index) => {
     registerMotion(panel, index % 2 ? 'motion-slide-right' : 'motion-scale', 100);
