@@ -768,7 +768,7 @@ html,body{overflow-x:hidden}
 
 .motion-page-ready .motion-header-part {
   opacity: 1;
-  translate: 0 0;
+  translate: none;
   transition:
     opacity .55s ease var(--motion-delay),
     translate .7s cubic-bezier(.22, 1, .36, 1) var(--motion-delay);
@@ -804,5 +804,25 @@ html,body{overflow-x:hidden}
     left: 0;
     right: auto;
     transform: none;
+  }
+}
+
+/* Match every page to the individual service-page mobile content width. */
+@media (max-width: 767px) {
+  main section .max-w-7xl,
+  main section .max-w-6xl,
+  main section .max-w-5xl,
+  main section > .site-container {
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+    margin-inline: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .appointment-section .max-w-6xl {
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+    margin-inline: auto !important;
   }
 }

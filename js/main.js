@@ -593,6 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('main')?.classList.toggle('finance-page', page === 'finance');
   const mobileContainment = document.createElement('style');
   mobileContainment.textContent = '@media (max-width:767px){main section .max-w-7xl{width:calc(100vw - 48px)!important;max-width:calc(100vw - 48px)!important}.hero-grid h1{display:block!important;width:100%!important;max-width:100%!important;font-size:clamp(2.25rem,11.8vw,3rem)!important;line-height:.98!important;white-space:normal!important;overflow-wrap:anywhere!important}.finance-page .hero-grid h1{font-size:2rem!important;letter-spacing:-.04em!important}.hero-grid h1~p{font-size:1rem!important;line-height:1.65!important;max-width:100%!important;overflow-wrap:anywhere!important}.hero-grid .work-order{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important;overflow:hidden!important}.hero-grid>div{min-width:0!important;width:100%!important}}';
+  mobileContainment.textContent += '@media (max-width:767px){main section .max-w-7xl,main section .max-w-6xl,main section .max-w-5xl,main section>.site-container{width:calc(100% - 32px)!important;max-width:calc(100% - 32px)!important;margin-inline:auto!important;padding-left:0!important;padding-right:0!important}}';
   document.head.append(mobileContainment);
 });
 
