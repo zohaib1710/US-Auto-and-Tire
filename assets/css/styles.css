@@ -684,6 +684,34 @@ html,body{overflow-x:hidden}
   }
 }
 
+/* Single-page appointment form */
+.appointment-simple-form {
+  min-height: 0 !important;
+}
+
+.appointment-simple-grid {
+  gap: 1.15rem;
+}
+
+.appointment-simple-submit {
+  display: flex;
+  width: 100%;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .appointment-simple-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .appointment-simple-grid .full {
+    grid-column: auto;
+  }
+}
+
 /* Shared entrance and scroll motion */
 .motion-enabled .motion-item {
   --motion-delay: 0ms;
