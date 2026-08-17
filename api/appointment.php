@@ -16,13 +16,17 @@ header('Cache-Control: no-store, max-age=0');
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: same-origin');
 
-function respond(int $status, bool $success, string $message, array $errors = []): void
+function respond(int $status, bool $success, string $message, array $errors = [], string $code = ''): void
 {
     http_response_code($status);
     $payload = ['success' => $success, 'message' => $message];
 
     if ($errors !== []) {
         $payload['errors'] = $errors;
+    }
+
+    if ($code !== '') {
+        $payload['code'] = $code;
     }
 
     echo json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
@@ -168,18 +172,41 @@ if (strpos($contentType, 'multipart/form-data') !== 0) {
     respond(422, false, 'The appointment request format is invalid.');
 }
 
-$configPath = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'site-private' . DIRECTORY_SEPARATOR . 'smtp-config.php';
+$accountRoot = dirname(__DIR__, 2);
+$configCandidates = [
+    $accountRoot . DIRECTORY_SEPARATOR . 'site-private' . DIRECTORY_SEPARATOR . 'smtp-config.php',
+    $accountRoot . DIRECTORY_SEPARATOR . 'smtp-config.php',
+];
+$configPath = '';
+$documentRoot = isset($_SERVER['DOCUMENT_ROOT']) ? realpath((string) $_SERVER['DOCUMENT_ROOT']) : false;
 
-if (!is_file($configPath) || !is_readable($configPath)) {
-    logServerIssue('private SMTP configuration is missing');
-    respond(500, false, 'Online requests are temporarily unavailable. Please call (754) 223-5452.');
+foreach ($configCandidates as $candidate) {
+    $resolvedCandidate = realpath($candidate);
+    $insideDocumentRoot = $documentRoot !== false
+        && $resolvedCandidate !== false
+        && strpos($resolvedCandidate, rtrim($documentRoot, '/\\') . DIRECTORY_SEPARATOR) === 0;
+
+    if ($resolvedCandidate !== false && !$insideDocumentRoot && is_file($resolvedCandidate) && is_readable($resolvedCandidate)) {
+        $configPath = $resolvedCandidate;
+        break;
+    }
 }
 
-$config = require $configPath;
+if ($configPath === '') {
+    logServerIssue('private SMTP configuration is missing');
+    respond(500, false, 'Online requests are temporarily unavailable. Please call (754) 223-5452.', [], 'mail_config_missing');
+}
+
+try {
+    $config = require $configPath;
+} catch (Throwable $exception) {
+    logServerIssue('private SMTP configuration could not be loaded');
+    respond(500, false, 'Online requests are temporarily unavailable. Please call (754) 223-5452.', [], 'mail_config_invalid');
+}
 
 if (!is_array($config)) {
     logServerIssue('private SMTP configuration is invalid');
-    respond(500, false, 'Online requests are temporarily unavailable. Please call (754) 223-5452.');
+    respond(500, false, 'Online requests are temporarily unavailable. Please call (754) 223-5452.', [], 'mail_config_invalid');
 }
 
 $requiredConfig = [
@@ -189,20 +216,34 @@ $requiredConfig = [
     'smtp_username',
     'smtp_password',
     'smtp_from_email',
-    'smtp_from_name',
     'smtp_to_email',
     'allowed_hosts',
-    'timezone',
-    'rate_limit_dir',
-    'rate_limit_secret',
 ];
 
 foreach ($requiredConfig as $key) {
     if (!array_key_exists($key, $config) || $config[$key] === '' || $config[$key] === []) {
         logServerIssue('private SMTP configuration is incomplete');
-        respond(500, false, 'Online requests are temporarily unavailable. Please call (754) 223-5452.');
+        respond(500, false, 'Online requests are temporarily unavailable. Please call (754) 223-5452.', [], 'mail_config_incomplete');
     }
 }
+
+if (!is_array($config['allowed_hosts'])) {
+    logServerIssue('allowed host configuration is invalid');
+    respond(500, false, 'Online requests are temporarily unavailable. Please call (754) 223-5452.', [], 'mail_config_invalid');
+}
+
+$smtpFromName = isset($config['smtp_from_name']) && is_string($config['smtp_from_name']) && trim($config['smtp_from_name']) !== ''
+    ? trim($config['smtp_from_name'])
+    : 'US Autos & Tires Website';
+$timezoneName = isset($config['timezone']) && is_string($config['timezone']) && trim($config['timezone']) !== ''
+    ? trim($config['timezone'])
+    : 'America/New_York';
+$rateLimitDirectory = isset($config['rate_limit_dir']) && is_string($config['rate_limit_dir']) && trim($config['rate_limit_dir']) !== ''
+    ? trim($config['rate_limit_dir'])
+    : dirname($configPath) . DIRECTORY_SEPARATOR . 'rate-limits';
+$rateLimitSecret = isset($config['rate_limit_secret']) && is_string($config['rate_limit_secret']) && strlen($config['rate_limit_secret']) >= 32
+    ? $config['rate_limit_secret']
+    : hash_hmac('sha256', 'us-autos-rate-limit-v1', (string) $config['smtp_password']);
 
 if (!requestHostIsAllowed((array) $config['allowed_hosts'])) {
     respond(422, false, 'The appointment request could not be verified.');
@@ -319,7 +360,7 @@ if (!in_array($sourcePage, $allowedPages, true)) {
 }
 
 try {
-    $timezone = new DateTimeZone((string) $config['timezone']);
+    $timezone = new DateTimeZone($timezoneName);
     $requestedDate = DateTimeImmutable::createFromFormat('!Y-m-d\\TH:i', $dateTimeInput, $timezone);
     $dateErrors = DateTimeImmutable::getLastErrors();
     $dateIsInvalid = $requestedDate === false
@@ -344,7 +385,7 @@ if ($errors !== []) {
 }
 
 try {
-    if (!consumeRateLimit((string) $config['rate_limit_dir'], (string) $config['rate_limit_secret'])) {
+    if (!consumeRateLimit($rateLimitDirectory, $rateLimitSecret)) {
         respond(429, false, 'Too many appointment requests were submitted. Please wait before trying again.');
     }
 } catch (Throwable $exception) {
@@ -422,7 +463,7 @@ try {
     $mail->CharSet = PHPMailer::CHARSET_UTF8;
     $mail->Timeout = 15;
     $mail->SMTPDebug = 0;
-    $mail->setFrom((string) $config['smtp_from_email'], (string) $config['smtp_from_name']);
+    $mail->setFrom((string) $config['smtp_from_email'], $smtpFromName);
     $mail->addAddress((string) $config['smtp_to_email']);
     $mail->addReplyTo($email, $fullName);
     $mail->isHTML(true);
@@ -432,10 +473,10 @@ try {
     $mail->send();
 } catch (MailerException $exception) {
     logServerIssue('SMTP delivery failed');
-    respond(500, false, 'We could not send the request online. Please call (754) 223-5452.');
+    respond(500, false, 'We could not send the request online. Please call (754) 223-5452.', [], 'smtp_delivery_failed');
 } catch (Throwable $exception) {
     logServerIssue('mail delivery failed unexpectedly');
-    respond(500, false, 'We could not send the request online. Please call (754) 223-5452.');
+    respond(500, false, 'We could not send the request online. Please call (754) 223-5452.', [], 'mail_delivery_failed');
 }
 
 respond(200, true, 'Thank you. Your appointment request has been received.');

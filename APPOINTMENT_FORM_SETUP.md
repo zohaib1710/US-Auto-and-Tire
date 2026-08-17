@@ -28,12 +28,12 @@ required ownership and permission model.
 
 ## Private SMTP configuration
 
-1. Copy `deployment/smtp-config.example.php` to
-   `site-private/smtp-config.php` outside `public_html`.
+1. Copy `deployment/smtp-config.example.php` to either
+   `site-private/smtp-config.php` or `smtp-config.php` in the account directory
+   directly above `public_html`.
 2. Replace the password placeholder directly in Hostinger's file manager or a
    secure deployment secret workflow.
-3. Replace the rate-limit secret with at least 32 random characters.
-4. Do not paste either secret into browser JavaScript, chat, Git, or a public
+3. Do not paste the password into browser JavaScript, chat, Git, or a public
    directory.
 
 Configured delivery identities:
@@ -46,9 +46,11 @@ Configured delivery identities:
 
 The private configuration follows the Hostinger-style keys `smtp_host`,
 `smtp_port`, `smtp_encryption`, `smtp_username`, `smtp_password`,
-`smtp_from_email`, `smtp_to_email`, and `allowed_hosts`. The additional
-`smtp_from_name`, `timezone`, `rate_limit_dir`, and `rate_limit_secret` values
-support branded notifications, appointment-time validation, and abuse controls.
+`smtp_from_email`, `smtp_to_email`, and `allowed_hosts`. The endpoint defaults to
+the `America/New_York` timezone, stores rate-limit data beside the private config,
+and derives a private rate-limit hash key from the SMTP password. Optional
+`smtp_from_name`, `timezone`, `rate_limit_dir`, and `rate_limit_secret` overrides
+remain supported but are not required.
 
 If hPanel shows different SMTP settings for the sender mailbox, use the values
 from hPanel. Port `587` with `tls` is the normal fallback when port `465` is not
