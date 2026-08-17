@@ -381,7 +381,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const field = form.elements.namedItem(name);
         if (field) field.maxLength = maxLength;
       });
-      [['formStarted', String(Math.floor(Date.now() / 1000))], ['source', 'appointment_request'], ['sourcePage', pageName]].forEach(([name, value]) => {
+      const sourcePage = pageName === 'index' ? 'home' : pageName;
+      [['formStarted', String(Math.floor(Date.now() / 1000))], ['source', 'appointment_request'], ['sourcePage', sourcePage]].forEach(([name, value]) => {
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = name;

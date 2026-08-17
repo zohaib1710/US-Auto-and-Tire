@@ -336,6 +336,11 @@ if ($source !== 'appointment_request') {
     $errors['source'] = 'The form source is invalid.';
 }
 
+// Accept cached frontend code that still identifies index.html as "index".
+if ($sourcePage === 'index') {
+    $sourcePage = 'home';
+}
+
 $allowedPages = [
     'home',
     'services',
