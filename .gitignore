@@ -1,0 +1,8 @@
+# Private mail configuration and runtime data
+site-private/
+smtp-config.php
+rate-limits/
+*.mail.log
+
+# Dependency download staging
+.phpmailer-download/

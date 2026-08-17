@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); } }));
 
   const pageName = location.pathname.replaceAll('\\','/').split('/').pop().replace('.html','') || 'index';
-  if (pageName === 'finance' && !document.querySelector('#appointment')) { const appointment = document.createElement('section'); appointment.id = 'appointment'; appointment.className = 'appointment-section'; document.querySelector('main')?.append(appointment); }
   if (pageName === 'about') {
     document.querySelectorAll('main section').forEach(section => {
       if (/team bio placeholder|the people behind the work/i.test(section.textContent)) section.remove();
@@ -377,6 +376,18 @@ document.addEventListener('DOMContentLoaded', () => {
       form.classList.remove('appointment-wizard');
       form.classList.add('appointment-simple-form');
       form.innerHTML = `<div class="form-grid appointment-simple-grid"><div class="form-field"><label for="appointment-first">First <b>*</b></label><input id="appointment-first" name="first" autocomplete="given-name" required placeholder="First name"></div><div class="form-field"><label for="appointment-last">Last <b>*</b></label><input id="appointment-last" name="last" autocomplete="family-name" required placeholder="Last name"></div><div class="form-field full"><label for="appointment-email">Email <b>*</b></label><input id="appointment-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div><div class="form-field full"><label for="appointment-phone">Phone <b>*</b></label><input id="appointment-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="(754) 223-5452"></div><div class="form-field full"><label for="appointment-date-time">Date &amp; Time <b>*</b></label><input id="appointment-date-time" name="dateTime" type="datetime-local" required></div></div><input class="honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="tool-button form-submit appointment-simple-submit" type="submit">Request Appointment ↗</button><p class="form-status" data-form-status aria-live="polite"></p><p class="form-privacy">Your request is not an instant confirmation. We only use these details to respond and confirm availability.</p>`;
+      const fieldLimits = {first: 80, last: 80, email: 254, phone: 32};
+      Object.entries(fieldLimits).forEach(([name, maxLength]) => {
+        const field = form.elements.namedItem(name);
+        if (field) field.maxLength = maxLength;
+      });
+      [['formStarted', String(Math.floor(Date.now() / 1000))], ['source', 'appointment_request'], ['sourcePage', pageName]].forEach(([name, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      });
     }
     if (pageName === 'index') {
       const appointmentCopy = formNode.querySelector('.appointment-note')?.parentElement;
@@ -440,9 +451,91 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-warning-book]').forEach(link => link.addEventListener('click', event => { event.preventDefault(); openAppointmentWith({service:'Not sure / Diagnosis',symptoms:'I noticed a warning sign or change in how the vehicle feels.'}); }));
   if (pageName === 'coupons') document.querySelectorAll('.coupon-tool').forEach(card => { const offer = card.querySelector('h3')?.textContent.trim(); const service = card.dataset.couponCategory === 'maintenance' ? 'Oil & Filter Changes' : 'Not sure / Diagnosis'; const button = document.createElement('button'); button.className = 'tool-button coupon-book'; button.textContent = 'Request Appointment ↗'; button.addEventListener('click', () => openAppointmentWith({service,symptoms:`I would like to ask about the ${offer} offer shown on the Finance page.`})); card.appendChild(button); });
   const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1); const minDate = tomorrow.toISOString().split('T')[0]; document.querySelectorAll('input[type="date"]').forEach(input => input.min = minDate); document.querySelectorAll('input[type="datetime-local"]').forEach(input => input.min = `${minDate}T08:00`);
-  document.querySelectorAll('[data-appointment-form]').forEach(form => form.addEventListener('submit', async event => { event.preventDefault(); const status = form.querySelector('[data-form-status]'); const submit = form.querySelector('.form-submit'); const phone = form.querySelector('[name="phone"]'); const email = form.querySelector('[name="email"]'); let valid = true; form.querySelectorAll('[required]').forEach(field => { field.classList.remove('input-error'); if (!field.checkValidity()) { field.classList.add('input-error'); valid = false; } }); if (phone && !/^[+\d\s().-]{7,}$/.test(phone.value)) { phone.classList.add('input-error'); valid = false; } if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.classList.add('input-error'); valid = false; } if (!valid) { status.textContent = 'Please check the highlighted fields and try again.'; status.className = 'form-status error'; return; } if (form.querySelector('[name="website"]').value) return; submit.disabled = true; submit.textContent = 'Preparing request…'; status.textContent = ''; const endpoint = window.US_AUTOS_FORM_ENDPOINT; if (!endpoint) { await new Promise(resolve => setTimeout(resolve, 500)); submit.disabled = false; submit.textContent = 'Send appointment request ↗'; status.textContent = 'Online submission is not connected yet. Please call (754) 223-5452 so the team can confirm your request.'; status.className = 'form-status error'; return; } try { const response = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(Object.fromEntries(new FormData(form))) }); if (!response.ok) throw new Error('Request failed'); form.reset(); status.textContent = 'Thank you. Your appointment request has been received. A member of the US Autos & Tires team will contact you to confirm the date and time.'; status.className = 'form-status success'; } catch { status.textContent = 'We could not send the request online. Please call (754) 223-5452 so the team can help directly.'; status.className = 'form-status error'; } finally { submit.disabled = false; submit.textContent = 'Send appointment request ↗'; } }));
-  document.querySelectorAll('[data-appointment-form] input,[data-appointment-form] select,[data-appointment-form] textarea').forEach(field => field.addEventListener('input', () => field.classList.remove('input-error')));
-  document.querySelectorAll('[data-appointment-form]').forEach(form => form.addEventListener('submit', () => setTimeout(() => { const status = form.querySelector('[data-form-status]'); if (status?.classList.contains('success')) { const name = [form.querySelector('[name="first"]')?.value, form.querySelector('[name="last"]')?.value].filter(Boolean).join(' '); const dateTime = form.querySelector('[name="dateTime"]')?.value || 'Requested date and time'; form.innerHTML = `<div class="form-success-summary" role="status"><span class="success-mark">✓</span><h3>Your request is on its way.</h3><p>We received your appointment request. A member of the US Autos &amp; Tires team will contact you to confirm availability.</p><dl><div><dt>Name</dt><dd>${name}</dd></div><div><dt>Date &amp; time</dt><dd>${dateTime}</dd></div></dl><div class="success-actions"><a href="tel:17542235452">Call the Shop</a><a href="${base}services.html">Return to Services</a></div></div>`; } }, 700)));
+  document.querySelectorAll('[data-appointment-form]').forEach(form => form.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    const status = form.querySelector('[data-form-status]');
+    const submit = form.querySelector('.form-submit');
+    const phone = form.querySelector('[name="phone"]');
+    const email = form.querySelector('[name="email"]');
+    let valid = true;
+
+    if (submit.disabled) return;
+
+    form.querySelectorAll('[required]').forEach(field => {
+      field.classList.remove('input-error');
+      field.removeAttribute('aria-invalid');
+      if (!field.checkValidity()) {
+        field.classList.add('input-error');
+        field.setAttribute('aria-invalid', 'true');
+        valid = false;
+      }
+    });
+
+    if (phone && !/^[+\d\s().-]{7,}$/.test(phone.value)) {
+      phone.classList.add('input-error');
+      phone.setAttribute('aria-invalid', 'true');
+      valid = false;
+    }
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.classList.add('input-error');
+      email.setAttribute('aria-invalid', 'true');
+      valid = false;
+    }
+
+    if (!valid) {
+      status.textContent = 'Please check the highlighted fields and try again.';
+      status.className = 'form-status error';
+      form.querySelector('.input-error')?.focus();
+      return;
+    }
+
+    const submittedName = [form.elements.first.value, form.elements.last.value].join(' ').trim();
+    const submittedDateTime = form.elements.dateTime.value;
+    const originalButtonText = submit.textContent;
+    submit.disabled = true;
+    submit.textContent = 'Sending request…';
+    status.textContent = '';
+    status.className = 'form-status';
+
+    try {
+      const response = await fetch(`${base}api/appointment.php`, {
+        method: 'POST',
+        body: new FormData(form),
+        credentials: 'same-origin',
+        headers: {'Accept': 'application/json'}
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok || payload.success !== true) {
+        const requestError = new Error(payload.message || 'We could not send the request online. Please call (754) 223-5452 so the team can help directly.');
+        requestError.fields = payload.errors || {};
+        throw requestError;
+      }
+
+      form.reset();
+      form.innerHTML = `<div class="form-success-summary" role="status"><span class="success-mark">✓</span><h3>Your request is on its way.</h3><p>We received your appointment request. A member of the US Autos &amp; Tires team will contact you to confirm availability.</p><dl><div><dt>Name</dt><dd data-success-name></dd></div><div><dt>Date &amp; time</dt><dd data-success-date></dd></div></dl><div class="success-actions"><a href="tel:17542235452">Call the Shop</a><a href="${base}services.html">Return to Services</a></div></div>`;
+      form.querySelector('[data-success-name]').textContent = submittedName;
+      form.querySelector('[data-success-date]').textContent = submittedDateTime;
+    } catch (error) {
+      Object.keys(error.fields || {}).forEach(name => {
+        const field = form.elements.namedItem(name);
+        if (field && field.type !== 'hidden') {
+          field.classList.add('input-error');
+          field.setAttribute('aria-invalid', 'true');
+        }
+      });
+      status.textContent = error.message || 'We could not send the request online. Please call (754) 223-5452 so the team can help directly.';
+      status.className = 'form-status error';
+      submit.disabled = false;
+      submit.textContent = originalButtonText;
+    }
+  }));
+  document.querySelectorAll('[data-appointment-form] input,[data-appointment-form] select,[data-appointment-form] textarea').forEach(field => field.addEventListener('input', () => {
+    field.classList.remove('input-error');
+    field.removeAttribute('aria-invalid');
+  }));
 });
 
 // Final sitewide content and route normalization. This runs after the shared
