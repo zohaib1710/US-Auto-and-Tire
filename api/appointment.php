@@ -337,7 +337,7 @@ if ($source !== 'appointment_request') {
 }
 
 $allowedPages = [
-    'index',
+    'home',
     'services',
     'car-care',
     'about',
